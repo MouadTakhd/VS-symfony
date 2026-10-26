@@ -1,0 +1,22 @@
+{
+  "name": "patient-registry",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "check": "node tools/check.mjs"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.7"
+  }
+}
