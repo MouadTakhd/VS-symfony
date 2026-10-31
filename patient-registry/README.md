@@ -94,7 +94,7 @@ Also worth your time once the checks pass: `z.prettifyError`, `z.flattenError`,
 │   ├── schema.ts               EXERCISE 1
 │   ├── db.ts                   EXERCISE 2 (+ query helpers, already written)
 │   ├── auth.ts                 EXERCISE 3
-│   ├── main.ts                 hash router; loads the database before first paint
+│   ├── main.tsx                React entry; mounts <App /> into #app
 │   ├── data.ts                 placeholder content for the other pages
 │   ├── pages/                  one render()/wire() pair per route
 │   └── ui/                     shell, buttons, badges, icons
