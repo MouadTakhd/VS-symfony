@@ -19,6 +19,7 @@ export const PatientSchema = z.object({
   ward: z.string().trim().min(2).max(40),
   visit: z.iso.date(),
   status: StatusSchema,
+  birthDate: z.iso.date().refine((value) => new Date(value) <= new Date(), { message: 'Birth date cannot be in the future' })
 })
 export const PatientListSchema = z.array(PatientSchema)
 /** POST body: the API assigns `id` and `visit`. Forms send age as "34", so coerce it. */

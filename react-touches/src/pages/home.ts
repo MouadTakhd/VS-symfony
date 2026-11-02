@@ -9,19 +9,34 @@ const homeView = {
   patients: HTMLElement,
   allergies: HTMLElement,
   critical: HTMLElement,
-  recent: HTMLUListElement,
+  recent: HTMLTableSectionElement,
   recentRow: HTMLTemplateElement,
+  searchForm:HTMLInputElement,
+  search:HTMLInputElement,
+  empty:HTMLParagraphElement
 }
 
-export default definePage(async ({ root }) => {
-  const $ = refs(root, homeView)
 
+export default definePage(async ({ root , signal}) => {
+  const $ = refs(root, homeView)
+  $.search.addEventListener('input',()=>{
+    const filter=$.search.value.trim().toLowerCase()
+    let visible=0
+    $.recent.querySelectorAll('tr').forEach((row)=>{
+      const match = (row.textContent?? '').toLowerCase().includes(filter)
+      row.hidden=!match
+      if(match)visible++
+    })
+    $.empty.hidden= visible>0
+  },{ signal })
+  $.searchForm.addEventListener('submit',(e)=>e.preventDefault(),{signal})
   // TODO (roadmap step 2): move these calls into src/api/patients.ts and src/api/allergies.ts
+  
   const [patients, allergies] = await Promise.all([
     request('GET', '/patients?_sort=visit&_order=desc', PatientListSchema),
     request('GET', '/allergies', AllergyListSchema),
   ])
-
+  
   if (!patients.ok || !allergies.ok) {
     $.error.textContent = !patients.ok ? patients.message : !allergies.ok ? allergies.message : ''
     $.error.hidden = false
@@ -42,3 +57,6 @@ export default definePage(async ({ root }) => {
     }
   })
 })
+
+
+    

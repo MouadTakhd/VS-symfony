@@ -1,5 +1,5 @@
 import { env } from "@/config/env"
-import type { Patient, UrlMethod } from "@/schema"
+import type { UrlMethod } from "@/schema"
 import z from "zod"
 
 export type ApiResult<T = unknown> = {
