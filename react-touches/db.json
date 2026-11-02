@@ -265,42 +265,101 @@
       "status": "discharged"
     }
   ],
-  "appointments": [
+  "allergies": [
     {
       "id": 1,
-      "patientId": "PR-10425",
-      "time": "09:00",
-      "date": "2026-10-27",
-      "reason": "Follow-up · hypertension",
-      "room": "Room 2",
-      "state": "done"
+      "patientId": "PR-10428",
+      "substance": "Penicillin",
+      "category": "drug",
+      "reaction": "Hives and itching",
+      "severity": "moderate",
+      "recordedAt": "2026-03-14",
+      "notes": "Use macrolides instead"
     },
     {
       "id": 2,
       "patientId": "PR-10428",
-      "time": "10:30",
-      "date": "2026-10-27",
-      "reason": "Post-op check",
-      "room": "Room 5",
-      "state": "now"
+      "substance": "Peanuts",
+      "category": "food",
+      "reaction": "Throat swelling",
+      "severity": "severe",
+      "recordedAt": "2025-11-02",
+      "notes": "Carries an EpiPen"
     },
     {
       "id": 3,
       "patientId": "PR-10427",
-      "time": "11:15",
-      "date": "2026-10-27",
-      "reason": "New intake",
-      "room": "Room 2",
-      "state": "next"
+      "substance": "Ibuprofen",
+      "category": "drug",
+      "reaction": "Stomach pain",
+      "severity": "mild",
+      "recordedAt": "2026-06-21"
     },
     {
       "id": 4,
       "patientId": "PR-10426",
-      "time": "13:00",
-      "date": "2026-10-27",
-      "reason": "ECG results",
-      "room": "Cardio lab",
-      "state": "next"
+      "substance": "Latex",
+      "category": "environmental",
+      "reaction": "Contact dermatitis",
+      "severity": "moderate",
+      "recordedAt": "2024-09-10",
+      "notes": "Use nitrile gloves"
+    },
+    {
+      "id": 5,
+      "patientId": "PR-10424",
+      "substance": "Iodinated contrast",
+      "category": "drug",
+      "reaction": "Anaphylaxis",
+      "severity": "life-threatening",
+      "recordedAt": "2025-01-30",
+      "notes": "Premedicate before any CT with contrast"
+    },
+    {
+      "id": 6,
+      "patientId": "PR-10424",
+      "substance": "Shellfish",
+      "category": "food",
+      "reaction": "Hives",
+      "severity": "moderate",
+      "recordedAt": "2023-07-18"
+    },
+    {
+      "id": 7,
+      "patientId": "PR-10422",
+      "substance": "Dust mites",
+      "category": "environmental",
+      "reaction": "Sneezing, wheezing",
+      "severity": "mild",
+      "recordedAt": "2026-02-05"
+    },
+    {
+      "id": 8,
+      "patientId": "PR-10421",
+      "substance": "Sulfonamides",
+      "category": "drug",
+      "reaction": "Rash",
+      "severity": "moderate",
+      "recordedAt": "2025-05-12"
+    },
+    {
+      "id": 9,
+      "patientId": "PR-10418",
+      "substance": "Bee venom",
+      "category": "environmental",
+      "reaction": "Anaphylaxis",
+      "severity": "life-threatening",
+      "recordedAt": "2024-04-22",
+      "notes": "Carries an EpiPen"
+    },
+    {
+      "id": 10,
+      "patientId": "PR-10419",
+      "substance": "Eggs",
+      "category": "food",
+      "reaction": "Vomiting",
+      "severity": "mild",
+      "recordedAt": "2026-08-09"
     }
   ]
 }

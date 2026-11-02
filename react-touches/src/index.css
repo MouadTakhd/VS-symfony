@@ -1,3 +1,16 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-
+@layer components {
+  .nav-link {
+    @apply rounded-md px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900;
+  }
+  .nav-link[aria-current='page'] {
+    @apply bg-indigo-50 text-indigo-700;
+  }
+  .card {
+    @apply rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-900/5;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium;
+  }
+}

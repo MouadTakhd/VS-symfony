@@ -1,0 +1,40 @@
+<!-- #/  ·  controller: home.ts  ·  every data-ref below is declared in home.ts -->
+<section data-title="Home" class="space-y-8">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight">Patient Registry</h1>
+    <p class="mt-1 text-sm text-gray-500">Patients and their allergies, live from the JSON database.</p>
+  </div>
+
+  <p data-ref="error" hidden class="rounded-md bg-red-50 p-3 text-sm text-red-700"></p>
+
+  <dl class="grid gap-4 sm:grid-cols-3">
+    <div class="card">
+      <dt class="text-sm text-gray-500">Patients</dt>
+      <dd data-ref="patients" class="mt-2 text-3xl font-semibold">–</dd>
+    </div>
+    <div class="card">
+      <dt class="text-sm text-gray-500">Recorded allergies</dt>
+      <dd data-ref="allergies" class="mt-2 text-3xl font-semibold">–</dd>
+    </div>
+    <div class="card">
+      <dt class="text-sm text-gray-500">Life-threatening</dt>
+      <dd data-ref="critical" class="mt-2 text-3xl font-semibold text-red-600">–</dd>
+    </div>
+  </dl>
+
+  <div class="card p-0">
+    <h2 class="border-b border-gray-100 px-5 py-4 text-sm font-semibold">Most recent visits</h2>
+    <ul data-ref="recent" class="divide-y divide-gray-100"></ul>
+  </div>
+
+  <!-- one row per patient; {{ … }} is filled by renderList() in home.ts -->
+  <template data-ref="recentRow">
+    <li class="flex items-center justify-between px-5 py-3">
+      <a href="#/patients/{{ id }}" class="min-w-0">
+        <p class="truncate text-sm font-semibold">{{ name }}</p>
+        <p class="truncate text-xs text-gray-500">{{ id }} · {{ ward }} · visited {{ visit }}</p>
+      </a>
+      <span class="badge {{ allergyClass }}">{{ allergyLabel }}</span>
+    </li>
+  </template>
+</section>

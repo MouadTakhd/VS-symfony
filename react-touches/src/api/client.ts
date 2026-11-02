@@ -19,7 +19,7 @@ export function toFieldErrors ( error:z.ZodError): Record<string,string> {
     }
     return out
 }
-export async function request<T extends Patient[]>(method: UrlMethod ,url:string,schema:z.ZodType<T>,body?:unknown) : Promise<ApiResult<T>>{
+export async function request<T>(method: UrlMethod ,url:string,schema:z.ZodType<T>,body?:unknown) : Promise<ApiResult<T>>{
     let response 
     try{
 
