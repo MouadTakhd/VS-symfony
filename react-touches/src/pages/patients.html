@@ -30,7 +30,7 @@
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="sm:col-span-2">
           <label for="p-name" class="mb-1 block text-sm font-medium text-gray-700">Full name</label>
-          <input id="p-name" data-ref="nameInput" name="name" type="text" required minlength="3" maxlength="60" autocomplete="off" placeholder="e.g. Sara Alaoui"
+          <input id="p-name" name="name" type="text" required minlength="3" maxlength="60" autocomplete="off" placeholder="e.g. Sara Alaoui"
                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
           <p data-error-for="name" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
         </div>
@@ -42,13 +42,13 @@
         </div>
         <div>
           <label for="p-birth" class="mb-1 block text-sm font-medium text-gray-700">Birth date</label>
-          <input id="p-birth" name="birthDate" type="date" required
+          <input id="p-birth" data-ref="birthInput" name="birthDate" type="date" required
                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
           <p data-error-for="birthDate" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
         </div>
         <div>
           <label for="p-age" class="mb-1 block text-sm font-medium text-gray-700">Age</label>
-          <input id="p-age" name="age" type="number" min="0" max="120" step="1" required
+          <input id="p-age" data-ref="ageInput" name="age" type="number" min="0" max="120" step="1" required
                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
           <p data-error-for="age" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
         </div>

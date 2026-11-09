@@ -10,7 +10,11 @@
 > - `patients.ts`: submit → `safeParse` → field errors under each input → store gets `parsed.data`.
 >   The name is checked while typing: a duplicate shows instantly, length errors after the first blur.
 >
-> Next up: step 6 (age ↔ birth date), step 7 (allergy forms), step 8 (polish).
+> - Step 6 + part of 8 (2026-11-09): every patient field has extra rules (letters-only name with
+>   first + last, unique email, ward format, birth date ≤ 120 years ago, age must match birth date),
+>   all checked live while typing. Stored records use the looser `…Base` rules so old data still loads.
+>
+> Next up: step 7 (allergy forms), the rest of step 8 (polish).
 
 The app is now **fully static**: no server, no `.env`, no `fetch`.
 

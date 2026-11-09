@@ -2,7 +2,14 @@ import { createPatient, deletePatient, getAllergies, getPatients, updatePatient 
 import { focusFirstInvalid, formValues, refs, renderList, showErrors, showFieldError } from '@/lib/dom'
 import { definePage } from '@/lib/page'
 import { toFieldErrors } from '@/lib/validation'
-import { DUPLICATE_NAME, newPatientSchemaFor, patientChangesSchemaFor, uniqueNameSchema } from '@/schema/schema'
+import {
+  AGE_MISMATCH,
+  ageFromBirthDate,
+  DUPLICATE_EMAIL,
+  DUPLICATE_NAME,
+  newPatientSchemaFor,
+  patientChangesSchemaFor,
+} from '@/schema/schema'
 import type { ApiResult, Patient } from '@/types'
 
 // patients.html's interface: every element this page touches, by data-ref and tag.
@@ -18,15 +25,25 @@ const patientsView = {
   formTitle: HTMLHeadingElement,
   openForm: HTMLButtonElement,
   closeForm: HTMLButtonElement,
-  nameInput: HTMLInputElement,
+  birthInput: HTMLInputElement,
+  ageInput: HTMLInputElement,
 }
+
+/** Every field of the form, in display order. */
+const FIELDS = ['name', 'email', 'birthDate', 'age', 'sex', 'blood', 'ward', 'status'] as const
+
+/** Errors worth showing the moment they happen, even in a field the user hasn't left yet. */
+const INSTANT = new Set<string>([DUPLICATE_NAME, DUPLICATE_EMAIL, AGE_MISMATCH])
 
 export default definePage(async ({ root, signal }) => {
   const $ = refs(root, patientsView)
 
   let editingId: string | null = null
   let query = ''
-  let nameTouched = false // show "too short" etc. only after the first blur / submit
+  // a field is "touched" once the user leaves it (or submits); only then do its normal
+  // errors ("too short", "pick a sex") appear, so nobody is scolded for the first keystroke
+  const touched = new Set<string>()
+  let ageIsAuto = true // age was filled from the birth date (or is empty), so it may be refilled
 
   // ---------- form helpers ----------
   function showForm(mode: 'new' | 'edit'): void {
@@ -34,7 +51,8 @@ export default definePage(async ({ root, signal }) => {
     $.formTitle.textContent = mode === 'new' ? 'New patient' : 'Edit patient'
     $.sumbitForm.textContent = mode === 'new' ? 'Add patient' : 'Save changes'
     showErrors($.newForm, {})
-    nameTouched = false
+    touched.clear()
+    ageIsAuto = true
     $.newForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }
 
@@ -43,7 +61,8 @@ export default definePage(async ({ root, signal }) => {
     $.newForm.reset()
     showErrors($.newForm, {})
     editingId = null
-    nameTouched = false
+    touched.clear()
+    ageIsAuto = true
   }
 
   function showError(message: string): void {
@@ -126,25 +145,65 @@ export default definePage(async ({ root, signal }) => {
     { signal },
   )
 
-  // ---------- live name check (while typing) ----------
-  // Same rule the store enforces, so what you see here is what saving will say.
-  function checkName(): void {
-    const result = uniqueNameSchema(list, editingId ?? undefined).safeParse($.nameInput.value)
-    const message = result.success ? '' : result.error.issues[0].message
-    // a duplicate shows immediately; length errors wait until the user has left the field once
-    showFieldError($.newForm, 'name', message === DUPLICATE_NAME || nameTouched ? message : '')
+  // ---------- live validation (every field, while typing) ----------
+  // Runs the SAME schema the submit and the store use, on the whole form, then shows each
+  // field's first error: always if the field was touched, or right away for INSTANT errors.
+  function validateLive(): void {
+    const schema = editingId ? patientChangesSchemaFor(list, editingId) : newPatientSchemaFor(list)
+    const result = schema.safeParse(formValues($.newForm))
+    const errors: Record<string, string> = result.success ? {} : toFieldErrors(result.error)
+    for (const field of FIELDS) {
+      const message = errors[field] ?? ''
+      showFieldError($.newForm, field, touched.has(field) || INSTANT.has(message) ? message : '')
+    }
   }
-  $.nameInput.addEventListener('input', checkName, { signal })
-  $.nameInput.addEventListener(
-    'blur',
-    () => {
-      nameTouched = true
-      checkName()
+
+  const fieldName = (e: Event) => (e.target as HTMLInputElement | HTMLSelectElement | null)?.name ?? ''
+
+  // input/change/focusout bubble, so three listeners on the form cover every field
+  $.newForm.addEventListener('input', validateLive, { signal })
+  $.newForm.addEventListener(
+    'change',
+    (e) => {
+      if (e.target instanceof HTMLSelectElement) touched.add(fieldName(e)) // a pick is a finished answer
+      validateLive()
     },
     { signal },
   )
-  // the Clear button resets values; clear their errors too
-  $.newForm.addEventListener('reset', () => showErrors($.newForm, {}), { signal })
+  $.newForm.addEventListener(
+    'focusout',
+    (e) => {
+      const name = fieldName(e)
+      if (name) touched.add(name)
+      validateLive()
+    },
+    { signal },
+  )
+
+  // birth date → fill in the age, unless the user typed their own age
+  $.birthInput.max = new Date().toISOString().slice(0, 10) // the date picker can't go into the future
+  $.ageInput.addEventListener('input', () => (ageIsAuto = $.ageInput.value === ''), { signal })
+  $.birthInput.addEventListener(
+    'change',
+    () => {
+      if ($.birthInput.value && ageIsAuto) {
+        $.ageInput.value = String(Math.max(0, ageFromBirthDate($.birthInput.value)))
+        validateLive()
+      }
+    },
+    { signal },
+  )
+
+  // the Clear button resets values; clear their errors and "touched" state too
+  $.newForm.addEventListener(
+    'reset',
+    () => {
+      touched.clear()
+      ageIsAuto = true
+      showErrors($.newForm, {})
+    },
+    { signal },
+  )
 
   // ---------- add / edit submit ----------
   function showInvalid(fieldErrors: Record<string, string>): void {
@@ -156,7 +215,7 @@ export default definePage(async ({ root, signal }) => {
     'submit',
     async (e: SubmitEvent): Promise<void> => {
       e.preventDefault()
-      nameTouched = true
+      FIELDS.forEach((f) => touched.add(f)) // a submit shows every error
       const values = formValues($.newForm)
 
       // 1. validate here for instant field errors (no store call when invalid)
