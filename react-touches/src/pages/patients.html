@@ -1,0 +1,172 @@
+<section data-title="Patient" class="space-y-6">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight">Patients</h1>
+    <p class="mt-1 text-sm text-gray-500">Add, search, edit and remove patient records.</p>
+  </div>
+
+  <p data-ref="error" hidden class="rounded-md bg-red-50 p-3 text-sm text-red-700"></p>
+
+  <!-- FORM + TABLE side by side (stacked below lg) -->
+  <div class="flex flex-col items-start gap-6 lg:flex-row">
+
+    <!-- FORM (left, hidden until opened) -->
+    <form data-ref="newForm" novalidate hidden
+          class="card w-full space-y-5 border-t-4 border-t-indigo-600 p-5 lg:sticky lg:top-4 lg:w-96 lg:shrink-0">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 data-ref="formTitle" class="text-base font-semibold">New patient</h2>
+          <p class="mt-0.5 text-xs text-gray-500">The ID and visit date are assigned automatically.</p>
+        </div>
+        <button type="button" data-ref="closeForm" aria-label="Close form"
+                class="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600">
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <p data-ref="formError" data-error-for="_" hidden class="rounded-md bg-red-50 p-3 text-sm text-red-700"></p>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <label for="p-name" class="mb-1 block text-sm font-medium text-gray-700">Full name</label>
+          <input id="p-name" data-ref="nameInput" name="name" type="text" required minlength="3" maxlength="60" autocomplete="off" placeholder="e.g. Sara Alaoui"
+                 class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          <p data-error-for="name" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="p-email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+          <input id="p-email" name="email" type="email" required autocomplete="off" placeholder="sara@example.com"
+                 class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          <p data-error-for="email" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-birth" class="mb-1 block text-sm font-medium text-gray-700">Birth date</label>
+          <input id="p-birth" name="birthDate" type="date" required
+                 class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          <p data-error-for="birthDate" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-age" class="mb-1 block text-sm font-medium text-gray-700">Age</label>
+          <input id="p-age" name="age" type="number" min="0" max="120" step="1" required
+                 class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          <p data-error-for="age" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-sex" class="mb-1 block text-sm font-medium text-gray-700">Sex</label>
+          <select id="p-sex" name="sex" required
+                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30">
+            <option value="" disabled selected>Select...</option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            <option value="O">Other</option>
+          </select>
+          <p data-error-for="sex" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-blood" class="mb-1 block text-sm font-medium text-gray-700">Blood type</label>
+          <select id="p-blood" name="blood" required
+                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30">
+            <option value="" disabled selected>Select...</option>
+            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+          </select>
+          <p data-error-for="blood" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-ward" class="mb-1 block text-sm font-medium text-gray-700">Ward</label>
+          <input id="p-ward" name="ward" type="text" required minlength="2" maxlength="40" autocomplete="off"
+                 class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          <p data-error-for="ward" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+        <div>
+          <label for="p-status" class="mb-1 block text-sm font-medium text-gray-700">Status</label>
+          <select id="p-status" name="status" required
+                  class="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30">
+            <option value="" disabled selected>Select...</option>
+            <option value="stable">Stable</option>
+            <option value="observation">Observation</option>
+            <option value="urgent">Urgent</option>
+            <option value="critical">Critical</option>
+            <option value="discharged">Discharged</option>
+          </select>
+          <p data-error-for="status" hidden aria-live="polite" class="mt-1 text-xs text-red-600"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 border-t border-gray-100 pt-4">
+        <button type="reset" data-ref="reset"
+                class="rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Clear</button>
+        <button type="submit" data-ref="sumbitForm"
+                class="rounded-lg bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Add patient</button>
+      </div>
+    </form>
+
+    <!-- TABLE (right, fills remaining width) -->
+    <div class="card w-full min-w-0 flex-1 overflow-hidden p-0">
+      <div class="flex flex-col gap-3 border-b border-gray-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-sm font-semibold">
+          All patients <span data-ref="count" class="ml-1 font-normal text-gray-400"></span>
+        </h2>
+
+        <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+          <div class="relative w-full sm:w-64">
+            <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+            </svg>
+            <input data-ref="search" type="search" autocomplete="off" aria-label="Search patients" placeholder="Search name or ID..."
+                   class="block w-full rounded-lg border border-gray-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+          </div>
+          <button type="button" data-ref="openForm"
+                  class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            New patient
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+          <thead class="bg-gray-50 text-xs uppercase tracking-wide text-gray-500">
+            <tr>
+              <th scope="col" class="px-5 py-3 font-medium">Patient</th>
+              <th scope="col" class="px-5 py-3 font-medium">ID</th>
+              <th scope="col" class="px-5 py-3 font-medium">Last visit</th>
+              <th scope="col" class="px-5 py-3 font-medium">Allergies</th>
+              <th scope="col" class="px-5 py-3 text-right font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody data-ref="patients" class="divide-y divide-gray-100"></tbody>
+        </table>
+        <p data-ref="empty" hidden class="px-5 py-10 text-center text-sm text-gray-500">No patients match your search.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<template data-ref="recentRow">
+  <tr class="transition-colors hover:bg-gray-50">
+    <td class="px-5 py-3">
+      <a href="#/patients/{{ id }}" class="font-semibold text-gray-900 hover:text-indigo-600 hover:underline">{{ name }}</a>
+    </td>
+    <td class="px-5 py-3 text-gray-500">{{ id }}</td>
+    <td class="whitespace-nowrap px-5 py-3 text-gray-500">{{ visit }}</td>
+    <td class="px-5 py-3"><span class="badge {{ allergyClass }}">{{ allergyLabel }}</span></td>
+    <td class="px-5 py-3">
+      <div class="flex items-center justify-end gap-2">
+        <button type="button" data-action="edit" data-id="{{ id }}"
+                class="rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
+          Edit
+        </button>
+        <button type="button" data-action="delete" data-id="{{ id }}"
+                class="rounded-md border border-red-200 bg-red-50 px-2.5 py-1.5 text-xs font-medium text-red-700 hover:bg-red-100">
+          Delete
+        </button>
+      </div>
+    </td>
+  </tr>
+</template>

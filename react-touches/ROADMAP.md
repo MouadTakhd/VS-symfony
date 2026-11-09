@@ -1,3 +1,7 @@
+> **Note (2026-11-07):** the app is now static: no `pnpm server`, no `.env`. Data lives in
+> `src/data/store.ts` (seeded from `src/data/db.json`, saved to localStorage). Wherever this file
+> says `@/api/*` or "server log", read `@/data/store` / localStorage. Zod plan: `ZOD-ROADMAP.md`.
+
 # Patient Registry — TypeScript + HTML roadmap
 
 A Vite app with **no framework**: pages are plain `.html` files, behaviour is plain

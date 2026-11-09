@@ -1,23 +1,13 @@
 import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 
-const root = fileURLToPath(new URL('.', import.meta.url))
-
+// Fully static app: no backend, no env vars. `pnpm build` → dist/ can be hosted anywhere.
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
-  // .env, .env.local, .env.[mode], .env.[mode].local, in that order of priority (last wins).
-  const env = loadEnv(mode, root, 'VITE_')
-
-  // Fail at startup instead of shipping a bundle that calls "undefined/patients".
-  if (!env.VITE_API_URL) {
-    throw new Error('VITE_API_URL is not set. Copy .env.example to .env and fill it in.')
-  }
-
-  return {
-    plugins: [tailwindcss()],
-    resolve: {
-      alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
-    },
-  }
+export default defineConfig({
+  base: './', // relative asset paths, so dist/ also works from a sub-folder
+  plugins: [tailwindcss()],
+  resolve: {
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
 })

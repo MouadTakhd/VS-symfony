@@ -3,7 +3,8 @@ import type { Cleanup, Page, Params } from './page'
 
 // Every HTML file in src/pages becomes a route. No registration needed:
 //
-//   pages/home.html            →  #/
+//   #/ (no page)               →  redirects to DEFAULT_PATH (#/patients)
+//   pages/home.html            →  #/  (only if you create it and remove the redirect)
 //   pages/patients.html        →  #/patients
 //   pages/patients.new.html    →  #/patients/new
 //   pages/patients.$id.html    →  #/patients/:id        (params.id)
@@ -18,6 +19,9 @@ import type { Cleanup, Page, Params } from './page'
 const pageHtml = import.meta.glob<string>('../pages/*.html', { query: '?raw', import: 'default', eager: true })
 const pageCode = import.meta.glob<{ default: Page }>('../pages/*.ts', { eager: true })
 const partials = import.meta.glob<string>('../partials/*.html', { query: '?raw', import: 'default', eager: true })
+
+/** Where #/ (and an empty URL) goes. */
+const DEFAULT_PATH = '/patients'
 
 const fileName = (path: string) => path.split('/').pop()!.replace(/\.(html|ts)$/, '')
 
@@ -98,6 +102,10 @@ export function startRouter(app: HTMLElement): void {
     leave?.cleanup?.()
 
     const path = location.hash.replace(/^#/, '') || '/'
+    if (path === '/') {
+      location.replace('#' + DEFAULT_PATH) // no extra history entry; fires hashchange → render
+      return
+    }
     const found = match(path)
     if (!found) {
       outlet!.innerHTML = '<p>Page not found. Add src/pages/404.html to customise this.</p>'

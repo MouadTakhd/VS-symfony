@@ -1,5 +1,5 @@
 import { env } from "@/config/env"
-import type { UrlMethod } from "@/schema"
+import type { UrlMethod } from "@/Schema/schema"
 import z from "zod"
 
 export type ApiResult<T = unknown> = {
@@ -22,15 +22,16 @@ export function toFieldErrors ( error:z.ZodError): Record<string,string> {
 export async function request<T>(method: UrlMethod ,url:string,schema:z.ZodType<T>,body?:unknown) : Promise<ApiResult<T>>{
     let response 
     try{
-
          response = await fetch(env.API_URL + url , {method,headers:body === undefined ? undefined :{'Content-Type': 'application/json'} ,body:body==undefined? undefined  : JSON.stringify(body)  })
     }catch{
-        return fail('server is not working rn ')
+        return fail('Server is not working right now  ')
     }
     if(!response.ok){
         return fail(`HTTP ${response.status}`)
     }
     const parsed= schema.safeParse( await response.json())
-    if(!parsed.success) return fail('undexpected data',toFieldErrors(parsed.error))
+    if(!parsed.success) return fail(`${parsed.error.issues[0].message}`,toFieldErrors(parsed.error))        
     return {ok:true,data:parsed.data}
- }
+ 
+
+}

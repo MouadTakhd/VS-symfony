@@ -112,6 +112,7 @@ export function showErrors(form: HTMLFormElement, fieldErrors: Record<string, st
     slot.textContent = ''
     slot.hidden = true
   })
+  form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'))
   const known = new Set([...slots].map((s) => s.dataset.errorFor))
   const leftovers: string[] = []
   for (const [field, message] of Object.entries(fieldErrors)) {
@@ -119,6 +120,7 @@ export function showErrors(form: HTMLFormElement, fieldErrors: Record<string, st
       const slot = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`)!
       slot.textContent = message
       slot.hidden = false
+      form.querySelector(`[name="${field}"]`)?.setAttribute('aria-invalid', 'true')
     } else leftovers.push(`${field}: ${message}`)
   }
   const general = form.querySelector<HTMLElement>('[data-error-for="_"]')
@@ -126,4 +128,24 @@ export function showErrors(form: HTMLFormElement, fieldErrors: Record<string, st
     general.textContent = leftovers.join(' · ')
     general.hidden = false
   }
+}
+
+/**
+ * Shows (or clears, with an empty message) the error of ONE field, leaving the others alone.
+ * For live checks while typing; showErrors() is for a whole submit.
+ */
+export function showFieldError(form: HTMLFormElement, field: string, message: string): void {
+  const slot = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`)
+  if (slot) {
+    slot.textContent = message
+    slot.hidden = !message
+  }
+  const input = form.querySelector(`[name="${field}"]`)
+  if (message) input?.setAttribute('aria-invalid', 'true')
+  else input?.removeAttribute('aria-invalid')
+}
+
+/** Moves focus to the first field marked invalid by showErrors / showFieldError. */
+export function focusFirstInvalid(form: HTMLFormElement): void {
+  form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
 }

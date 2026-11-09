@@ -1,0 +1,191 @@
+{
+  "patients": [
+    {
+      "id": "PR-10421",
+      "name": "Amina Benali",
+      "email": "amina.benali@example.com",
+      "age": 34,
+      "sex": "F",
+      "blood": "O+",
+      "ward": "Cardiology",
+      "visit": "2026-10-28",
+      "status": "stable",
+      "birthDate": "1992-03-14"
+    },
+    {
+      "id": "PR-10422",
+      "name": "Youssef El Idrissi",
+      "email": "youssef.elidrissi@example.com",
+      "age": 58,
+      "sex": "M",
+      "blood": "A+",
+      "ward": "Intensive Care",
+      "visit": "2026-10-30",
+      "status": "critical",
+      "birthDate": "1968-07-02"
+    },
+    {
+      "id": "PR-10423",
+      "name": "Sara Lahlou",
+      "email": "sara.lahlou@example.com",
+      "age": 27,
+      "sex": "F",
+      "blood": "B-",
+      "ward": "Maternity",
+      "visit": "2026-10-31",
+      "status": "observation",
+      "birthDate": "1999-01-22"
+    },
+    {
+      "id": "PR-10424",
+      "name": "Karim Tazi",
+      "email": "karim.tazi@example.com",
+      "age": 45,
+      "sex": "M",
+      "blood": "AB+",
+      "ward": "Emergency",
+      "visit": "2026-11-01",
+      "status": "urgent",
+      "birthDate": "1981-05-09"
+    },
+    {
+      "id": "PR-10425",
+      "name": "Nadia Chraibi",
+      "email": "nadia.chraibi@example.com",
+      "age": 71,
+      "sex": "F",
+      "blood": "O-",
+      "ward": "Geriatrics",
+      "visit": "2026-10-20",
+      "status": "discharged",
+      "birthDate": "1955-09-30"
+    },
+    {
+      "id": "PR-10426",
+      "name": "Omar Fassi",
+      "email": "omar.fassi@example.com",
+      "age": 12,
+      "sex": "M",
+      "blood": "A-",
+      "ward": "Pediatrics",
+      "visit": "2026-11-02",
+      "status": "stable",
+      "birthDate": "2014-02-17"
+    },
+    {
+      "id": "PR-10427",
+      "name": "Lina Berrada",
+      "email": "lina.berrada@example.com",
+      "age": 39,
+      "sex": "O",
+      "blood": "B+",
+      "ward": "Neurology",
+      "visit": "2026-10-25",
+      "status": "observation",
+      "birthDate": "1987-11-05"
+    },
+    {
+      "id": "PR-10428",
+      "name": "Hassan Alaoui",
+      "email": "hassan.alaoui@example.com",
+      "age": 63,
+      "sex": "M",
+      "blood": "O+",
+      "ward": "Oncology",
+      "visit": "2026-10-29",
+      "status": "urgent",
+      "birthDate": "1963-04-11"
+    },
+    {
+      "id": "PR-10429",
+      "name": "test",
+      "email": "test@gmail.com",
+      "age": 21,
+      "sex": "F",
+      "blood": "A+",
+      "ward": "zae",
+      "status": "observation",
+      "birthDate": "2000-11-11",
+      "visit": "2026-11-04"
+    },
+    {
+      "id": "PR-10430",
+      "name": "ezqsdq",
+      "email": "t.pop@gmail.com",
+      "age": 20,
+      "sex": "M",
+      "blood": "A-",
+      "ward": "FDS",
+      "status": "urgent",
+      "birthDate": "2026-10-02",
+      "visit": "2026-11-04"
+    }
+  ],
+  "allergies": [
+    {
+      "id": 1,
+      "patientId": "PR-10421",
+      "substance": "Penicillin",
+      "category": "drug",
+      "reaction": "Hives",
+      "severity": "moderate",
+      "recordedAt": "2026-10-28"
+    },
+    {
+      "id": 2,
+      "patientId": "PR-10422",
+      "substance": "Peanuts",
+      "category": "food",
+      "reaction": "Anaphylaxis",
+      "severity": "life-threatening",
+      "recordedAt": "2026-10-30",
+      "notes": "Carries an EpiPen"
+    },
+    {
+      "id": 3,
+      "patientId": "PR-10422",
+      "substance": "Latex",
+      "category": "environmental",
+      "reaction": "Contact dermatitis",
+      "severity": "mild",
+      "recordedAt": "2026-10-30"
+    },
+    {
+      "id": 4,
+      "patientId": "PR-10424",
+      "substance": "Ibuprofen",
+      "category": "drug",
+      "reaction": "Swelling of the face",
+      "severity": "severe",
+      "recordedAt": "2026-11-01"
+    },
+    {
+      "id": 5,
+      "patientId": "PR-10426",
+      "substance": "Pollen",
+      "category": "environmental",
+      "reaction": "Sneezing and itchy eyes",
+      "severity": "mild",
+      "recordedAt": "2026-11-02",
+      "notes": "Seasonal, worse in spring"
+    },
+    {
+      "id": 6,
+      "patientId": "PR-10427",
+      "substance": "Shellfish",
+      "category": "food",
+      "reaction": "Vomiting",
+      "severity": "moderate",
+      "recordedAt": "2026-10-25"
+    },
+    {
+      "id": 7,
+      "patientId": "PR-10428",
+      "substance": "Iodine contrast",
+      "category": "drug",
+      "reaction": "Shortness of breath",
+      "severity": "severe",
+      "recordedAt": "2026-10-29"
+    }
+  ]
+}

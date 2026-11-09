@@ -14,3 +14,10 @@
     @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium;
   }
 }
+
+/* Fields flagged by showErrors / showFieldError. Outside @layer on purpose: unlayered CSS
+   beats Tailwind utilities, so this overrides the inputs' own border-gray-300. */
+input[aria-invalid='true'],
+select[aria-invalid='true'] {
+  @apply border-red-400 focus:border-red-500 focus:ring-red-500/30;
+}
